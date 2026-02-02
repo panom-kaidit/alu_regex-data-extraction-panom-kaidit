@@ -7,6 +7,12 @@ On 12/01/2026 at 14:30, sales agent JohnA23 recorded a sale of 2500kg of maize a
 , phone (256) 701-234-567, amount UGX 78,500, and reference link http://invalid-url
 . On 12/01/2026 at 16:10 PM agent MarkX completed a sale worth UGX 9,000 paid using 4444 3333 2222 1111.`
 
+/* Security and malicious apps
+HTML tags are treated as unsafe and ignored to prevent XSS injections
+ */
+const htmlRegex = /<[^>]+>/g;
+
+const containsMaliciousHTML = htmlRegex.test(rawText);
 
 /*
 Email validation:
@@ -22,18 +28,19 @@ URL validation:
 - checks for both http or https
 - valid domain with at least one dot
 */
-const urlRegex = /https?:\/\/[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\/[a-zA-Z0-9-_]+)*/g;
+const urlRegex = /\bhttps?:\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})(\/[^\s<>"]*)?\b/g;
 
 /*
 Phone number validation:
 - country codes or area codes
 - strict digit grouping
 */
-const phoneRegex = /\(?\+?[0-9]{1,3}\)?[\s.-][0-9]{3}([\s.-][0-9]{3}){1,2}/g;
+const phoneRegex = /\b(\+?\d{1,3}[\s.-]?)?(\(?\d{3}\)?[\s.-]?)\d{3}[\s.-]\d{3,4}\b/g;
 
 /*
 the time validation for both 24hrs and 12hrs*/
 const timeRegex = /([01][0-9]|2[0-3]):[0-5][0-9]|(1[0-2]|[1-9]):[0-5][0-9]\s(AM|PM)/g;
+
 
 
 function extract(pattern, text) {
