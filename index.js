@@ -28,7 +28,7 @@ URL validation:
 - checks for both http or https
 - valid domain with at least one dot
 */
-const urlRegex = /\bhttps?:\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})(\/[^\s<>"]*)?\b/g;
+const urlRegex = /\bhttps?:\/\/(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s<>"]*)?\b/g;
 
 /*
 Phone number validation:
